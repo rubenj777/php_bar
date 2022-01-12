@@ -17,6 +17,18 @@
         <a href="create.php" class="me-5 btn btn-success">Créer un cocktail</a>
     </nav>
 
+    <div class="alert alert-warning alert-dismissible fade <?php if ($_GET['info'] == 'errDel') {
+                                                                echo "show";
+                                                            } ?>" role="alert">
+        <p>Suppression impossible</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="alert alert-warning alert-dismissible fade <?php if ($_GET['info'] == 'noId') {
+                                                                echo "show";
+                                                            } ?>" role="alert">
+        <p>Ce cocktail n'existe pas</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 
     <div class="container">
         <?= $pageContent ?>
@@ -29,6 +41,7 @@
         <p class="m-0">Le Template - Bar Lounge</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 
 </html>

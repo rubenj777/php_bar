@@ -29,6 +29,7 @@ if ($name && $image && $ingredients && $id) {
         'cocktail_id' => $id
     ]);
     header("Location: cocktail.php?id=$id");
+    exit();
 }
 
 

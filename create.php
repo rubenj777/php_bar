@@ -7,7 +7,6 @@ $image = null;
 $ingredients = null;
 
 if (!empty($_POST['name']) && !empty($_POST['image']) && !empty($_POST['ingredients'])) {
-
     $name = htmlspecialchars($_POST['name']);
     $image = htmlspecialchars($_POST['image']);
     $ingredients = htmlspecialchars($_POST['ingredients']);
@@ -25,6 +24,7 @@ if ($name && $image && $ingredients) {
     ]);
     $id = $pdo->lastInsertId();
     header("Location: cocktail.php?id=$id");
+    exit();
 }
 
 $pageTitle = "Créer un cocktail";
