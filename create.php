@@ -10,7 +10,7 @@ if (!empty($_POST['name']) && !empty($_POST['image']) && !empty($_POST['ingredie
     $name = htmlspecialchars($_POST['name']);
     $image = htmlspecialchars($_POST['image']);
     $ingredients = htmlspecialchars($_POST['ingredients']);
-};
+}
 
 
 

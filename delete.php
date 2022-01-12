@@ -18,15 +18,14 @@ $sql->execute(["cocktail_id" => $id]);
 $cocktail = $sql->fetch();
 
 
-if (!$coktail) {
+if (!$cocktail) {
     header('Location: index.php?info=errDel');
     exit();
 }
 
-if ($id == $cocktail['id']) {
-    $query = $pdo->prepare("DELETE FROM cocktails WHERE id = :cocktail_id");
-    $query->execute([
-        'cocktail_id' => $id
-    ]);
-    header("Location: index.php");
-}
+
+$query = $pdo->prepare("DELETE FROM cocktails WHERE id = :cocktail_id");
+$query->execute([
+    'cocktail_id' => $id
+]);
+header("Location: index.php");
