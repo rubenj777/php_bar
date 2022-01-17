@@ -1,18 +1,12 @@
 <?php
 
-require_once "db.php";
+require_once "core/libraries/db.php";
+require_once "core/libraries/tools.php";
 
-$sql = $pdo->query("SELECT * FROM cocktails");
-$cocktails = $sql->fetchAll();
+// controller
+
+$cocktails = findAllCocktails();
+
 $pageTitle = "Tous les cocktails";
 
-
-// debut de la memoire tampon
-ob_start();
-
-require_once "templates/cocktails/index.html.php";
-
-// on vide la mémoire tampon dans cette variable
-$pageContent = ob_get_clean();
-
-require_once "templates/layout.html.php";
+render('cocktails/index', compact('cocktails', 'pageTitle'));

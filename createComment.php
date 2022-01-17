@@ -1,6 +1,8 @@
 <?php
 
-require_once "db.php";
+require_once "core/libraries/db.php";
+require_once "core/libraries/tools.php";
+$pdo = getPdo();
 
 $id = null;
 $author = null;
@@ -13,18 +15,13 @@ if (!empty($_POST['author']) && !empty($_POST['content']) && !empty($_POST['id']
 }
 
 if (!$id || !$content || !$author) {
-    header("Location: cocktail.php?id=$id");
+    redirect("cocktail.php?id={$id}");
 }
 
-$sql = $pdo->prepare("SELECT * FROM cocktails WHERE id = :cocktail_id");
-$sql->execute([
-    "cocktail_id" => $id
-]);
-$cocktail = $sql->fetch();
+$cocktail = findCocktailById($id);
 
 if (!$cocktail) {
-    header("Location: index.php?info=noId");
-    exit();
+    redirect("index.php?info=noId");
 }
 
 
@@ -34,5 +31,5 @@ $sql->execute([
     'content' => $content,
     'cocktail_id' => $id,
 ]);
-header("Location: cocktail.php?id=$id");
-exit();
+
+redirect("cocktail.php?id={$id}");

@@ -1,6 +1,9 @@
 <?php
 
-require_once "db.php";
+require_once "core/libraries/db.php";
+require_once "core/libraries/tools.php";
+
+$pdo = getPdo();
 
 $id = null;
 
@@ -18,8 +21,7 @@ $comment = $sql->fetch();
 
 
 if (!$comment) {
-    header("Location: cocktail.php?id=$comment[cocktail_id]");
-    exit();
+    redirect("cocktail.php?id={$comment['cocktail_id']}");
 }
 
 
@@ -28,5 +30,5 @@ $query->execute([
     'comment_id' => $id
 ]);
 
-header("Location: cocktail.php?id=$comment[cocktail_id]");
-exit();
+
+redirect("cocktail.php?id={$comment['cocktail_id']}");
