@@ -2,7 +2,6 @@
 
 require_once "core/libraries/db.php";
 require_once "core/libraries/tools.php";
-$pdo = getPdo();
 
 $id = null;
 $author = null;
@@ -24,12 +23,6 @@ if (!$cocktail) {
     redirect("index.php?info=noId");
 }
 
-
-$sql = $pdo->prepare("INSERT INTO comments (author, content, cocktail_id) VALUES (:author, :content, :cocktail_id)");
-$sql->execute([
-    'author' => $author,
-    'content' => $content,
-    'cocktail_id' => $id,
-]);
+saveComment($author, $content, $id);
 
 redirect("cocktail.php?id={$id}");
