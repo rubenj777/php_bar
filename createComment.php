@@ -1,6 +1,7 @@
 <?php
 
-require_once "core/libraries/db.php";
+require_once "core/Models/Comment.php";
+require_once "core/Models/Cocktail.php";
 require_once "core/libraries/tools.php";
 
 $id = null;
@@ -17,12 +18,14 @@ if (!$id || !$content || !$author) {
     redirect("cocktail.php?id={$id}");
 }
 
-$cocktail = findCocktailById($id);
+$modelCocktail = new Cocktail();
+$cocktail = $modelCocktail->findCocktailById($id);
 
 if (!$cocktail) {
     redirect("index.php?info=noId");
 }
 
-saveComment($author, $content, $id);
+$modelComment = new Comment();
+$modelComment->saveComment($author, $content, $id);
 
 redirect("cocktail.php?id={$id}");

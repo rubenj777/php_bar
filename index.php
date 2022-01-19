@@ -1,11 +1,12 @@
 <?php
 
-require_once "core/libraries/db.php";
 require_once "core/libraries/tools.php";
+require_once "core/Models/Cocktail.php";
 
 // controller
 
-$cocktails = findAllCocktails();
+$modelCocktail = new Cocktail();
+$cocktails = $modelCocktail->findAllCocktails();
 
 $pageTitle = "Tous les cocktails";
 

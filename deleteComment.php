@@ -1,6 +1,6 @@
 <?php
 
-require_once "core/libraries/db.php";
+require_once "core/Models/Comment.php";
 require_once "core/libraries/tools.php";
 
 $id = null;
@@ -13,12 +13,13 @@ if (!$id) {
     die("Erreur");
 }
 
-$comment = findCommentById($id);
+$modelComment = new Comment();
+$comment = $modelComment->findCommentById($id);
 
 if (!$comment) {
     redirect("cocktail.php?id={$comment['cocktail_id']}");
 }
 
-removeComment($id);
+$modelComment->removeComment($id);
 
 redirect("cocktail.php?id={$comment['cocktail_id']}");
