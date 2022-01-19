@@ -1,19 +1,18 @@
 <?php
 
 // require_once "../libraries/db.php";
-require_once dirname(__FILE__) . "/../libraries/db.php";
+// require_once dirname(__FILE__) . "/../libraries/db.php";
+require_once "Pdo.php";
 
 
-class Cocktail
+
+class Cocktail extends Db
 {
-
-    private $pdo;
-
     public function __construct()
     {
-        $this->pdo = getPdo();
+        parent::__construct();
+        $this->pdo = $this->getPdo();
     }
-
 
     /**
      * retourne un tableau contenant tous les cocktails
