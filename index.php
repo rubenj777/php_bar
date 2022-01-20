@@ -6,7 +6,7 @@ require_once "core/Models/Cocktail.php";
 // controller
 
 $modelCocktail = new Cocktail();
-$cocktails = $modelCocktail->findAllCocktails();
+$cocktails = $modelCocktail->findAll();
 
 $pageTitle = "Tous les cocktails";
 

@@ -14,12 +14,12 @@ if (!$id) {
 }
 
 $modelComment = new Comment();
-$comment = $modelComment->findCommentById($id);
+$comment = $modelComment->findById($id);
 
 if (!$comment) {
     redirect("cocktail.php?id={$comment['cocktail_id']}");
 }
 
-$modelComment->removeComment($id);
+$modelComment->remove($id);
 
 redirect("cocktail.php?id={$comment['cocktail_id']}");

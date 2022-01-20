@@ -15,14 +15,14 @@ if (!$id) {
 }
 
 $modelCocktail = new Cocktail();
-$cocktail = $modelCocktail->findCocktailById($id);
+$cocktail = $modelCocktail->findById($id);
 
 if (!$cocktail) {
     redirect('index.php?info=noId');
 }
 
 $modelComment = new Comment();
-$comments = $modelComment->findAllCommentsByCocktail($cocktail['id']);
+$comments = $modelComment->findAllByCocktail($cocktail['id']);
 
 $pageTitle = $cocktail['name'];
 render('cocktails/show', compact('cocktail', 'comments', 'pageTitle'));

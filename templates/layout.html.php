@@ -12,9 +12,13 @@
 
 <body>
 
-    <nav class="navbar nav-expand-lg navbar-light bg-dark mb-5">
+    <nav class="navbar nav-expand-lg navbar-light bg-dark mb-5 justify-content-between">
         <a href="/bar" class="navbar-brand ms-5" id="logo">le template</a>
-        <a href="create.php" class="me-5 btn btn-success">Créer un cocktail</a>
+        <div>
+            <a href="infos.php" class="me-5 btn btn-info">Voir les infos</a>
+            <a href="sandwiches.php" class="me-5 btn btn-info">Voir les sandwiches</a>
+            <a href="create.php" class="me-5 btn btn-success">Créer un cocktail</a>
+        </div>
     </nav>
 
     <div class="alert alert-warning alert-dismissible fade <?php if ($_GET['info'] == 'errDel') {

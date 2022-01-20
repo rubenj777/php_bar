@@ -19,13 +19,13 @@ if (!$id || !$content || !$author) {
 }
 
 $modelCocktail = new Cocktail();
-$cocktail = $modelCocktail->findCocktailById($id);
+$cocktail = $modelCocktail->findById($id);
 
 if (!$cocktail) {
     redirect("index.php?info=noId");
 }
 
 $modelComment = new Comment();
-$modelComment->saveComment($author, $content, $id);
+$modelComment->save($author, $content, $id);
 
 redirect("cocktail.php?id={$id}");
