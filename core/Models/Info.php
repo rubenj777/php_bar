@@ -1,16 +1,17 @@
 <?php
 
-require_once "Model.php";
+namespace Models;
 
+require_once "AbstractModel.php";
 
-
-class Info extends Model
+class Info extends AbstractModel
 {
-    protected string $table = "infos";
+    protected string $tableName = "infos";
 
     /**
-     * insert dans la bdd le nouveau commentaire
-     * @param string $description
+     * insert dans la bdd la nouvelle info
+     * @param string $content
+     * @return void
      */
     public function save(string $content): void
     {

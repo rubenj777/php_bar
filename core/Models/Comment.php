@@ -1,10 +1,12 @@
 <?php
 
-require_once "Model.php";
+namespace Models;
 
-class Comment extends Model
+require_once "AbstractModel.php";
+
+class Comment extends AbstractModel
 {
-    protected string $table = "comments";
+    protected string $tableName = "comments";
 
     /**
      * trouver tous les commentaires d'un cocktail
@@ -25,7 +27,7 @@ class Comment extends Model
      * insert dans la bdd le nouveau commentaire
      * @param string $author
      * @param string $content
-     * @param integer $id
+     * @param integer $cocktail_id
      */
     public function save(string $author, string $content, int $cocktail_id): void
     {

@@ -1,6 +1,3 @@
-<a href="sandwiches.php" class="btn btn-info">Retour</a>
-
-
 <div class="mt-3 mb-5 p-3 card">
 
     <h2><?= $sandwich['description'] ?></h2>
@@ -11,3 +8,5 @@
     </form>
 
 </div>
+
+<a href="sandwiches.php" class="btn btn-info">Retour</a>

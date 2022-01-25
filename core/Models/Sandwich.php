@@ -1,22 +1,23 @@
 <?php
 
-require_once "Model.php";
+namespace Models;
 
-class Sandwich extends Model
+require_once "AbstractModel.php";
+
+class Sandwich extends AbstractModel
 {
-    protected string $table = "sandwiches";
-    protected int $price;
+    protected string $tableName = "sandwiches";
 
     /**
-     * @param string $content
-     * @param int $price
+     * @param string $description
+     * @param int $prix
      */
-    public function save(string $content, int $price): void
+    public function save(string $description, int $prix): void
     {
-        $sql = $this->pdo->prepare("INSERT INTO sandwiches (description, prix) VALUES (:content, :price)");
+        $sql = $this->pdo->prepare("INSERT INTO sandwiches (description, prix) VALUES (:description, :prix)");
         $sql->execute([
-            'content' => $content,
-            'price' => $price,
+            'description' => $description,
+            'prix' => $prix,
         ]);
     }
 }

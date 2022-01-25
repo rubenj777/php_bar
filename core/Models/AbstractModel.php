@@ -1,15 +1,17 @@
 <?php
 
-require_once dirname(__FILE__) . "/../libraries/db.php";
+namespace Models;
 
-abstract class Model
+require_once "core/Database/PdoMySql.php";
+
+abstract class AbstractModel
 {
-    protected PDO $pdo;
-    protected string $table;
+    protected $pdo;
+    protected string $tableName;
 
     public function __construct()
     {
-        $this->pdo = getPdo();
+        $this->pdo = \Database\PdoMySql::getPdo();
     }
 
     /**
@@ -20,7 +22,7 @@ abstract class Model
      */
     public function findById(int $id)
     {
-        $sql = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id");
+        $sql = $this->pdo->prepare("SELECT * FROM {$this->tableName} WHERE id = :id");
         $sql->execute(["id" => $id]);
         $element = $sql->fetch();
         return $element;
@@ -34,7 +36,7 @@ abstract class Model
      */
     public function findAll(): array
     {
-        $sql = $this->pdo->query("SELECT * FROM {$this->table}");
+        $sql = $this->pdo->query("SELECT * FROM {$this->tableName}");
         $elements = $sql->fetchAll();
         return $elements;
     }
@@ -45,7 +47,7 @@ abstract class Model
      */
     public function remove(int $id): void
     {
-        $sql = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = :id");
+        $sql = $this->pdo->prepare("DELETE FROM {$this->tableName} WHERE id = :id");
         $sql->execute([
             'id' => $id
         ]);
