@@ -21,6 +21,22 @@ class Glace extends AbstractModel
             'description' => $description,
             'image' => $image,
         ]);
-        redirect('glaces.php');
+    }
+
+    /**
+     * update une glace dans la bdd
+     * @param string $description
+     * @param string $image
+     * @param int $id
+     * @return void
+     */
+    public function update(string $description, string $image, string $id)
+    {
+        $sql = $this->pdo->prepare("UPDATE {$this->tableName} SET description = :description, image = :image WHERE id = :id");
+        $sql->execute([
+            'description' => $description,
+            'image' => $image,
+            'id' => $id,
+        ]);
     }
 }

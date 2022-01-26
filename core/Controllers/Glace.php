@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
+
 require_once "core/Controllers/AbstractController.php";
-require_once "core/libraries/tools.php";
 require_once "core/Models/Glace.php";
 
 class Glace extends AbstractController
@@ -12,18 +12,14 @@ class Glace extends AbstractController
 
     /**
      * affiche les glaces
-     * @return void
      */
-    public function index(): void
+    public function index()
     {
-        $glaces = $this->defaultModel->findAll();
-        $pageTitle = "Nos glaces";
-        render('glaces/index', compact('glaces', 'pageTitle'));
+        return $this->render('glaces/index', ['pageTitle' => 'Nos glaces', 'glaces' => $this->defaultModel->findAll()]);
     }
 
     /**
      * affichage d'une glace
-     * @return void
      */
     public function show()
     {
@@ -34,44 +30,70 @@ class Glace extends AbstractController
         }
 
         if (!$id) {
-            redirect('index.php?info=noId');
+            return $this->redirect('index.php?info=noId');
         }
 
         $glace = $this->defaultModel->findById($id);
 
         if (!$glace) {
-            redirect('index.php?info=noId');
+            return $this->redirect('index.php?info=noId');
         }
         $pageTitle = $glace['description'];
-        render('glaces/show', compact('glace', 'pageTitle'));
+        return $this->render('glaces/show', compact('glace', 'pageTitle'));
     }
     /** 
      * afficher le formulaire et traiter la soumission du formulaire
-     * @return void
      */
-    public function new(): void
+    public function new()
     {
+        $pageTitle = "Nouvelle glace";
+
+        $id = null;
+        $glace = null;
+        $edit = false;
+
+        if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
+            $id = $_GET['id'];
+        }
+
+        if ($id) {
+            $glace = $this->defaultModel->findById($id);
+        }
+
+        if ($glace) {
+            $edit = true;
+            $pageTitle = $glace['description'];
+        }
+
         $description = null;
         $image = null;
-
         if (!empty($_POST['description']) && !empty($_POST['image'])) {
             $description = htmlspecialchars($_POST['description']);
             $image = htmlspecialchars($_POST['image']);
         }
 
-        if ($description && $image) {
-            $this->defaultModel->save($description, $image);
-            redirect('glaces.php');
+        $idToEdit = null;
+        if (!empty($_POST['id']) && ctype_digit($_POST['id'])) {
+            $idToEdit = $_POST['id'];
         }
 
-        render('glaces/create', ['pageTitle' => "Nouvelle glace"]);
+        if ($description && $image && $idToEdit) {
+            $this->defaultModel->update($description, $image, $idToEdit);
+            return $this->redirect('glaces.php');
+        }
+
+        if ($description && $image) {
+            $this->defaultModel->save($description, $image);
+            return $this->redirect('glaces.php');
+        }
+
+        return $this->render('glaces/create', ['pageTitle' => $pageTitle, "glace" => $glace, "edit" => $edit]);
     }
 
     /**
      * supprimer une glace
-     * @return void
      */
-    public function delete(): void
+    public function delete(): Response
     {
         $id = null;
         if (!empty($_POST['id']) && ctype_digit($_POST['id'])) {
@@ -79,14 +101,14 @@ class Glace extends AbstractController
         }
 
         if (!$id) {
-            redirect('index.php?info=noId');
+            return $this->redirect('index.php?info=noId');
         }
 
         if (!$this->defaultModel->findById($id)) {
-            redirect('index.php?info=noId');
+            return $this->redirect('index.php?info=noId');
         }
 
         $this->defaultModel->remove($id);
-        redirect('glaces.php');
+        return $this->redirect('glaces.php');
     }
 }

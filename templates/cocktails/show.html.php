@@ -6,7 +6,7 @@
     <p><?= $cocktail['ingredients'] ?></p>
 
     <div class="d-flex">
-        <a class="btn btn-info w-25 me-2" href="edit.php?id=<?= $cocktail['id'] ?>">Modifier le cocktail</a>
+        <a class="btn btn-info w-25 me-2" href="editCocktail.php?id=<?= $cocktail['id'] ?>">Modifier le cocktail</a>
         <form action="deleteCocktail.php" method="post">
             <button type="submit" name="id" value="<?= $cocktail['id'] ?>" class="btn btn-danger">Supprimer le cocktail</button>
         </form>

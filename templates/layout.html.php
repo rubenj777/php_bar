@@ -15,9 +15,11 @@
     <nav class="navbar nav-expand-lg navbar-light bg-dark mb-5 justify-content-between">
         <a href="/bar" class="navbar-brand ms-5" id="logo">le template</a>
         <div>
-            <a href="createSandwich.php" class="me-5 btn btn-success">Créer un sandwich</a>
-            <a href="createGlace.php" class="me-5 btn btn-success">Créer une glace</a>
-            <a href="createCocktail.php" class="me-5 btn btn-success">Créer un cocktail</a>
+            <a href="createSandwich.php" class="me-2 btn btn-success">Créer un sandwich</a>
+            <a href="createGlace.php" class="me-2 btn btn-success">Créer une glace</a>
+            <a href="createCocktail.php" class="me-2 btn btn-success">Créer un cocktail</a>
+            <a href="sandwiches.php" class="me-2 btn btn-info">Voir les sandwiches</a>
+            <a href="glaces.php" class="me-2 btn btn-info">Voir les glaces</a>
         </div>
     </nav>
 
@@ -37,11 +39,7 @@
     </div>
 
     <div class="container">
-        <div class="mb-5">
-            <a href="infos.php" class="me-5 btn btn-info">Voir les infos</a>
-            <a href="sandwiches.php" class="me-5 btn btn-info">Voir les sandwiches</a>
-            <a href="glaces.php" class="me-5 btn btn-info">Voir les glaces</a>
-        </div>
+
         <?= $pageContent ?>
     </div>
 

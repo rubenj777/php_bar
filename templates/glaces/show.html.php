@@ -5,7 +5,7 @@
     <p><?= $glace['description'] ?></p>
 
     <div class="d-flex">
-        <a class="btn btn-info w-25 me-2" href="edit.php?id=<?= $glace['id'] ?>">Modifier la glace</a>
+        <a class="btn btn-info w-25 me-2" href="createGlace.php?id=<?= $glace['id'] ?>">Modifier la glace</a>
         <form action="deleteGlace.php" method="post">
             <button type="submit" name="id" value="<?= $glace['id'] ?>" class="btn btn-danger">Supprimer la glace</button>
         </form>

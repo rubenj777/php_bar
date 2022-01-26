@@ -2,19 +2,19 @@
 
 namespace Controllers;
 
+use App\Response;
+
 require_once "core/Controllers/AbstractController.php";
-require_once "core/libraries/tools.php";
 require_once "core/Models/Sandwich.php";
 
 
 class Sandwich extends AbstractController
 {
 
-    protected $defaultModelName = "\Models\Sandwich";
+    protected $defaultModelName = \Models\Sandwich::class;
 
     /**
      * affiche l'accueil des sandwiches
-     * @return void
      */
     public function index()
     {
@@ -23,13 +23,12 @@ class Sandwich extends AbstractController
 
         $pageTitle = "Tous les sandwiches";
 
-        render('sandwiches/index', compact('sandwiches', 'pageTitle'));
+        return $this->render('sandwiches/index', compact('sandwiches', 'pageTitle'));
     }
 
 
     /**
      * affiche un sandwich
-     * @return void
      */
     public function show()
     {
@@ -40,27 +39,44 @@ class Sandwich extends AbstractController
         }
 
         if (!$id) {
-            redirect('index.php?info=noId');
+            return $this->redirect('index.php?info=noId');
         }
 
 
         $sandwich = $this->defaultModel->findById($id);
 
         if (!$sandwich) {
-            redirect('index.php?info=noId');
+            return $this->redirect('index.php?info=noId');
         }
 
 
         $pageTitle = $sandwich['description'];
-        render('sandwiches/show', compact('sandwich', 'pageTitle'));
+        return $this->render('sandwiches/show', compact('sandwich', 'pageTitle'));
     }
 
     /** 
      * afficher le formulaire et traiter la soumission du formulaire
-     * @return void
      */
-    public function new(): void
+    public function new()
     {
+        $pageTitle = "Nouveau sandwich";
+        $id = null;
+        $sandwich = null;
+        $edit = false;
+
+        if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
+            $id = $_GET['id'];
+        }
+
+        if ($id) {
+            $sandwich = $this->defaultModel->findById($id);
+        }
+
+        if ($sandwich) {
+            $edit = true;
+            $pageTitle = $sandwich['description'];
+        }
+
         $description = null;
         $prix = null;
 
@@ -69,18 +85,28 @@ class Sandwich extends AbstractController
             $prix = htmlspecialchars($_POST['prix']);
         }
 
-        if ($description && $prix) {
-            $this->defaultModel->save($description, $prix);
-            redirect('sandwiches.php');
+        $idToEdit = null;
+        if (!empty($_POST['id']) && ctype_digit($_POST['id'])) {
+            $idToEdit = $_POST['id'];
         }
 
-        render('sandwiches/create', ['pageTitle' => "Nouveau sandwich"]);
+        if ($description && $prix && $idToEdit) {
+            $this->defaultModel->update($description, $prix, $idToEdit);
+            return $this->redirect('sandwiches.php');
+        }
+
+        if ($description && $prix) {
+            $this->defaultModel->save($description, $prix);
+            return $this->redirect('sandwiches.php');
+        }
+
+        return $this->render('sandwiches/create', ['pageTitle' => $pageTitle, "sandwich" => $sandwich, "edit" => $edit]);
     }
+
     /**
      * supprimer un sandwich de la db
-     * @return void
      */
-    public function delete(): void
+    public function delete(): Response
     {
         $id = null;
 
@@ -89,14 +115,14 @@ class Sandwich extends AbstractController
         }
 
         if (!$id) {
-            redirect("index.php?info=noId");
+            return $this->redirect("index.php?info=noId");
         }
 
         if (!$this->defaultModel->findById($id)) {
-            redirect("index.php?info=noId");
+            return $this->redirect("index.php?info=noId");
         }
 
         $this->defaultModel->remove($id);
-        redirect('sandwiches.php');
+        return $this->redirect('sandwiches.php');
     }
 }

@@ -3,7 +3,6 @@
 namespace Controllers;
 
 require_once "core/Controllers/AbstractController.php";
-require_once "core/libraries/tools.php";
 
 class Comment extends AbstractController
 {
@@ -22,22 +21,22 @@ class Comment extends AbstractController
         }
 
         if (!$id || !$content || !$author) {
-            redirect("cocktail.php?id={$id}");
+            return $this->redirect("cocktail.php?id={$id}");
         }
 
         $defaultModel = new \Models\Cocktail();
         $cocktail = $defaultModel->findById($id);
 
         if (!$cocktail) {
-            redirect("index.php?info=noId");
+            return $this->redirect("index.php?info=noId");
         }
 
         $this->defaultModel->save($author, $content, $id);
 
-        redirect("cocktail.php?id={$id}");
+        return $this->redirect("cocktail.php?id={$id}");
     }
 
-    public function delete()
+    public function delete(): Response
     {
         $id = null;
 
@@ -52,11 +51,11 @@ class Comment extends AbstractController
         $comment = $this->defaultModel->findById($id);
 
         if (!$comment) {
-            redirect("cocktail.php?id={$comment['cocktail_id']}");
+            return $this->redirect("cocktail.php?id={$comment['cocktail_id']}");
         }
 
         $this->defaultModel->remove($id);
 
-        redirect("cocktail.php?id={$comment['cocktail_id']}");
+        return $this->redirect("cocktail.php?id={$comment['cocktail_id']}");
     }
 }
