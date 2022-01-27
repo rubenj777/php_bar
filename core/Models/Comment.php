@@ -2,8 +2,6 @@
 
 namespace Models;
 
-require_once "AbstractModel.php";
-
 class Comment extends AbstractModel
 {
     protected string $tableName = "comments";
@@ -16,7 +14,7 @@ class Comment extends AbstractModel
      */
     public function findAllByCocktail(int $cocktail_id)
     {
-        $sql = $this->pdo->prepare("SELECT * FROM comments WHERE cocktail_id = :cocktail_id");
+        $sql = $this->pdo->prepare("SELECT * FROM {$this->tableName} WHERE cocktail_id = :cocktail_id");
         $sql->execute(["cocktail_id" => $cocktail_id]);
         $comments = $sql->fetchAll();
         return $comments;
@@ -31,11 +29,11 @@ class Comment extends AbstractModel
      */
     public function save(string $author, string $content, int $cocktail_id): void
     {
-        $sql = $this->pdo->prepare("INSERT INTO comments (author, content, cocktail_id) VALUES (:author, :content, :cocktail_id)");
+        $sql = $this->pdo->prepare("INSERT INTO {$this->tableName} (author, content, cocktail_id) VALUES (:author, :content, :cocktail_id)");
         $sql->execute([
             'author' => $author,
             'content' => $content,
-            'cocktail_id' => $cocktail_id,
+            'cocktail_id' => $cocktail_id
         ]);
     }
 }

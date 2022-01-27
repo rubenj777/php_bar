@@ -4,9 +4,9 @@ namespace Controllers;
 
 
 
-class Comment extends AbstractController
+class Reaction extends AbstractController
 {
-    protected $defaultModelName = \Models\Comment::class;
+    protected $defaultModelName = \Models\Reaction::class;
 
     public function new()
     {
@@ -21,19 +21,21 @@ class Comment extends AbstractController
         }
 
         if (!$id || !$content || !$author) {
-            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
+
+            return $this->redirect(["type" => "info", "action" => "index", "info" => "noId"]);
         }
 
-        $this->defaultModel = new \Models\Cocktail();
-        $cocktail = $this->defaultModel->findById($id);
+        $this->defaultModel = new \Models\Info();
+        $info = $this->defaultModel->findById($id);
 
-        if (!$cocktail) {
-            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
+        if (!$info) {
+            return $this->redirect(["type" => "info", "action" => "index", "info" => "noId"]);
         }
 
-        $this->defaultModel->save($author, $content, $id);
 
-        return $this->redirect(["type" => "cocktail", "action" => "show", "id" => $cocktail->id]);
+        $this->defaultModel->save($author, $content, $info->id);
+
+        return $this->redirect(["type" => "info", "action" => "show", "id" => $info->id]);
     }
 
     public function delete(): Response
@@ -48,14 +50,14 @@ class Comment extends AbstractController
             die("Erreur");
         }
 
-        $comment = $this->defaultModel->findById($id);
+        $reaction = $this->defaultModel->findById($id);
 
-        if (!$comment) {
+        if (!$reaction) {
             return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
         $this->defaultModel->remove($id);
 
-        return $this->redirect(["type" => "cocktail", "action" => "show", "id" => $comment->cocktail_id]);
+        return $this->redirect(["type" => "info", "action" => "show", "id" => $reaction->info_id]);
     }
 }

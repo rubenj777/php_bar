@@ -2,8 +2,6 @@
 
 namespace Models;
 
-require_once "core/Database/PdoMySql.php";
-
 abstract class AbstractModel
 {
     protected $pdo;
@@ -37,7 +35,8 @@ abstract class AbstractModel
     public function findAll(): array
     {
         $sql = $this->pdo->query("SELECT * FROM {$this->tableName}");
-        $elements = $sql->fetchAll();
+        $elements = $sql->fetchAll(\PDO::FETCH_CLASS, get_class($this));
+
         return $elements;
     }
 

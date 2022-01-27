@@ -1,7 +1,5 @@
 <?php
 
-require_once "core/Controllers/Cocktail.php";
+require_once "core/App/autoloading.php";
 
-
-$typeCocktail = new \Controllers\Cocktail();
-$typeCocktail->index();
+\App\Kernel::run();

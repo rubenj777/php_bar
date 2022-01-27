@@ -2,10 +2,6 @@
 
 namespace Controllers;
 
-
-require_once "core/Controllers/AbstractController.php";
-require_once "core/Models/Glace.php";
-
 class Glace extends AbstractController
 {
     protected $defaultModelName = "\Models\Glace";
@@ -30,15 +26,15 @@ class Glace extends AbstractController
         }
 
         if (!$id) {
-            return $this->redirect('index.php?info=noId');
+            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
         $glace = $this->defaultModel->findById($id);
 
         if (!$glace) {
-            return $this->redirect('index.php?info=noId');
+            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
-        $pageTitle = $glace['description'];
+        $pageTitle = $glace->description;
         return $this->render('glaces/show', compact('glace', 'pageTitle'));
     }
     /** 
@@ -62,7 +58,7 @@ class Glace extends AbstractController
 
         if ($glace) {
             $edit = true;
-            $pageTitle = $glace['description'];
+            $pageTitle = $glace->description;
         }
 
         $description = null;
@@ -79,12 +75,12 @@ class Glace extends AbstractController
 
         if ($description && $image && $idToEdit) {
             $this->defaultModel->update($description, $image, $idToEdit);
-            return $this->redirect('glaces.php');
+            return $this->redirect(["type" => "glace", "action" => "index"]);
         }
 
         if ($description && $image) {
             $this->defaultModel->save($description, $image);
-            return $this->redirect('glaces.php');
+            return $this->redirect(["type" => "glace", "action" => "index"]);
         }
 
         return $this->render('glaces/create', ['pageTitle' => $pageTitle, "glace" => $glace, "edit" => $edit]);
@@ -101,14 +97,14 @@ class Glace extends AbstractController
         }
 
         if (!$id) {
-            return $this->redirect('index.php?info=noId');
+            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
         if (!$this->defaultModel->findById($id)) {
-            return $this->redirect('index.php?info=noId');
+            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
         $this->defaultModel->remove($id);
-        return $this->redirect('glaces.php');
+        return $this->redirect(["type" => "cocktail", "action" => "index"]);
     }
 }

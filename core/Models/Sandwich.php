@@ -2,8 +2,6 @@
 
 namespace Models;
 
-require_once "AbstractModel.php";
-
 class Sandwich extends AbstractModel
 {
     protected string $tableName = "sandwiches";

@@ -2,11 +2,10 @@
 
 namespace Models;
 
-require_once "AbstractModel.php";
-
 class Cocktail extends AbstractModel
 {
     protected string $tableName = "cocktails";
+    private string $class = "Cocktail";
 
 
     /**

@@ -25,3 +25,6 @@ img {
   background-position: center;
   object-fit: contain;
 }
+nav a {
+  width: 150px;
+}

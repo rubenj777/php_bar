@@ -15,11 +15,13 @@
     <nav class="navbar nav-expand-lg navbar-light bg-dark mb-5 justify-content-between">
         <a href="/bar" class="navbar-brand ms-5" id="logo">le template</a>
         <div>
-            <a href="createSandwich.php" class="me-2 btn btn-success">Créer un sandwich</a>
-            <a href="createGlace.php" class="me-2 btn btn-success">Créer une glace</a>
-            <a href="createCocktail.php" class="me-2 btn btn-success">Créer un cocktail</a>
-            <a href="sandwiches.php" class="me-2 btn btn-info">Voir les sandwiches</a>
-            <a href="glaces.php" class="me-2 btn btn-info">Voir les glaces</a>
+            <a href="?type=sandwich&action=new" class="me-2 btn btn-success">Créer un sandwich</a>
+            <a href="?type=glace&action=new" class="me-2 btn btn-success">Créer une glace</a>
+            <a href="?type=cocktail&action=new" class="me-2 btn btn-success">Créer un cocktail</a>
+            <a href="?type=info&action=new" class="me-2 btn btn-success">Créer une info</a>
+            <a href="?type=sandwich&action=index" class="me-2 btn btn-info">Voir les sandwiches</a>
+            <a href="?type=glace&action=index" class="me-2 btn btn-info">Voir les glaces</a>
+            <a href="?type=info&action=index" class="me-2 btn btn-info">Voir les infos</a>
         </div>
     </nav>
 

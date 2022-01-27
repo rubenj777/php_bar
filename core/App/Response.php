@@ -6,12 +6,20 @@ class Response
 {
     /**
      * redirigie vers l'url passée en param
-     * @param string $url
+     * @param array $param
      * @return void
      */
-    public static function redirect(string $url): void
+    public static function redirect(?array $param = null): void
     {
-        header("Location: {$url}");
+        $url = "";
+        if ($param) {
+            $url = "?";
+            foreach ($param as $key => $value) {
+                $newParamGet = $key . "=" . $value . "&";
+                $url .= $newParamGet;
+            }
+        }
+        header("Location: " . $url);
         exit();
     }
 }

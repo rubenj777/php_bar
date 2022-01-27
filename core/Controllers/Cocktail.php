@@ -2,11 +2,6 @@
 
 namespace Controllers;
 
-require_once "core/Controllers/AbstractController.php";
-require_once "core/Models/Comment.php";
-require_once "core/Models/Cocktail.php";
-
-
 class Cocktail extends AbstractController
 {
 
@@ -38,20 +33,20 @@ class Cocktail extends AbstractController
         }
 
         if (!$id) {
-            return $this->redirect('index.php?info=noId');
+            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
 
         $cocktail = $this->defaultModel->findById($id);
 
         if (!$cocktail) {
-            return $this->redirect('index.php?info=noId');
+            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
         $modelComment = new \Models\Comment();
-        $comments = $modelComment->findAllByCocktail($cocktail['id']);
+        $comments = $modelComment->findAllByCocktail($cocktail->id);
 
-        $pageTitle = $cocktail['name'];
+        $pageTitle = $cocktail->name;
         return $this->render('cocktails/show', compact('cocktail', 'comments', 'pageTitle'));
     }
 
@@ -73,12 +68,16 @@ class Cocktail extends AbstractController
 
         if ($name && $image && $ingredients) {
             $this->defaultModel->save($name, $image, $ingredients);
-            return $this->redirect("index.php");
+            return $this->redirect(['action' => 'cocktails', 'type' => 'index']);
         }
 
         return $this->render("cocktails/create", ["pageTitle" => "Nouveau cocktail"]);
     }
 
+    /**
+     * edition
+     * @return void
+     */
     public function edit()
     {
         $pageTitle = "Modifier le cocktail";
@@ -110,7 +109,12 @@ class Cocktail extends AbstractController
 
         if ($name && $image && $ingredients && $idToEdit) {
             $this->defaultModel->update($name, $image, $ingredients, $idToEdit);
-            return $this->redirect("index.php");
+
+            return $this->redirect([
+                "type" => "cocktail",
+                "action" => "show",
+                "id" => $idToEdit
+            ]);
         }
 
         return $this->render("cocktails/edit", ["pageTitle" => $pageTitle, "cocktail" => $cocktail]);
@@ -127,14 +131,14 @@ class Cocktail extends AbstractController
         }
 
         if (!$id) {
-            return $this->redirect('index.php?info=noId');
+            return $this->redirect(['type' => 'cocktail', 'info' => 'noId']);
         }
 
         if (!$this->defaultModel->findById($id)) {
-            return $this->redirect('index.php?info=noId');
+            return $this->redirect(['type' => 'cocktail', 'info' => 'noId']);
         }
 
         $this->defaultModel->remove($id);
-        return $this->redirect('index.php');
+        return $this->redirect(['type' => 'cocktail', 'action' => 'index']);
     }
 }

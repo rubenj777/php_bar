@@ -2,12 +2,6 @@
 
 namespace Controllers;
 
-use App\Response;
-
-require_once "core/Controllers/AbstractController.php";
-require_once "core/Models/Sandwich.php";
-
-
 class Sandwich extends AbstractController
 {
 
@@ -39,18 +33,18 @@ class Sandwich extends AbstractController
         }
 
         if (!$id) {
-            return $this->redirect('index.php?info=noId');
+            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
 
         $sandwich = $this->defaultModel->findById($id);
 
         if (!$sandwich) {
-            return $this->redirect('index.php?info=noId');
+            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
 
-        $pageTitle = $sandwich['description'];
+        $pageTitle = $sandwich->description;
         return $this->render('sandwiches/show', compact('sandwich', 'pageTitle'));
     }
 
@@ -74,7 +68,7 @@ class Sandwich extends AbstractController
 
         if ($sandwich) {
             $edit = true;
-            $pageTitle = $sandwich['description'];
+            $pageTitle = $sandwich->description;
         }
 
         $description = null;
@@ -92,12 +86,12 @@ class Sandwich extends AbstractController
 
         if ($description && $prix && $idToEdit) {
             $this->defaultModel->update($description, $prix, $idToEdit);
-            return $this->redirect('sandwiches.php');
+            return $this->redirect(["type" => "sandwich", "action" => "index"]);
         }
 
         if ($description && $prix) {
             $this->defaultModel->save($description, $prix);
-            return $this->redirect('sandwiches.php');
+            return $this->redirect(["type" => "sandwich", "action" => "index"]);
         }
 
         return $this->render('sandwiches/create', ['pageTitle' => $pageTitle, "sandwich" => $sandwich, "edit" => $edit]);
@@ -115,14 +109,14 @@ class Sandwich extends AbstractController
         }
 
         if (!$id) {
-            return $this->redirect("index.php?info=noId");
+            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
         if (!$this->defaultModel->findById($id)) {
-            return $this->redirect("index.php?info=noId");
+            return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
         $this->defaultModel->remove($id);
-        return $this->redirect('sandwiches.php');
+        return $this->redirect(["type" => "sandwich", "action" => "index"]);
     }
 }

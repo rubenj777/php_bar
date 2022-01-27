@@ -2,8 +2,6 @@
 
 namespace Models;
 
-require_once "AbstractModel.php";
-
 class Glace extends AbstractModel
 {
     protected string $tableName = "glaces";
