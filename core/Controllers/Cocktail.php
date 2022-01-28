@@ -68,7 +68,7 @@ class Cocktail extends AbstractController
 
         if ($name && $image && $ingredients) {
             $this->defaultModel->save($name, $image, $ingredients);
-            return $this->redirect(['action' => 'cocktails', 'type' => 'index']);
+            return $this->redirect(['type' => 'cocktail', 'action' => 'index']);
         }
 
         return $this->render("cocktails/create", ["pageTitle" => "Nouveau cocktail"]);

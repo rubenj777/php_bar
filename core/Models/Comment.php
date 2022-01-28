@@ -16,7 +16,7 @@ class Comment extends AbstractModel
     {
         $sql = $this->pdo->prepare("SELECT * FROM {$this->tableName} WHERE cocktail_id = :cocktail_id");
         $sql->execute(["cocktail_id" => $cocktail_id]);
-        $comments = $sql->fetchAll();
+        $comments = $sql->fetchAll(\PDO::FETCH_CLASS, get_class($this));
         return $comments;
     }
 

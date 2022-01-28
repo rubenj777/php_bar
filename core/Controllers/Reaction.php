@@ -25,8 +25,8 @@ class Reaction extends AbstractController
             return $this->redirect(["type" => "info", "action" => "index", "info" => "noId"]);
         }
 
-        $this->defaultModel = new \Models\Info();
-        $info = $this->defaultModel->findById($id);
+        $this->typeInfo = new \Models\Info();
+        $info = $this->typeInfo->findById($id);
 
         if (!$info) {
             return $this->redirect(["type" => "info", "action" => "index", "info" => "noId"]);

@@ -16,7 +16,7 @@ class Reaction extends AbstractModel
     {
         $sql = $this->pdo->prepare("SELECT * FROM {$this->tableName} WHERE info_id = :info_id");
         $sql->execute(["info_id" => $info_id]);
-        $reactions = $sql->fetchAll();
+        $reactions = $sql->fetchAll(\PDO::FETCH_CLASS, get_class($this));
         return $reactions;
     }
 

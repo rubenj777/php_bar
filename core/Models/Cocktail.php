@@ -5,8 +5,6 @@ namespace Models;
 class Cocktail extends AbstractModel
 {
     protected string $tableName = "cocktails";
-    private string $class = "Cocktail";
-
 
     /**
      * ajoute un nouveau cocktail dans la bdd

@@ -24,8 +24,8 @@ class Comment extends AbstractController
             return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
-        $this->defaultModel = new \Models\Cocktail();
-        $cocktail = $this->defaultModel->findById($id);
+        $this->typeCocktail = new \Models\Cocktail();
+        $cocktail = $this->typeCocktail->findById($id);
 
         if (!$cocktail) {
             return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
