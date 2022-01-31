@@ -4,7 +4,7 @@ namespace Controllers;
 
 class Glace extends AbstractController
 {
-    protected $defaultModelName = "\Models\Glace";
+    protected $defaultModelName = \Models\Glace::class;
 
     /**
      * affiche les glaces
@@ -34,7 +34,7 @@ class Glace extends AbstractController
         if (!$glace) {
             return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
-        $pageTitle = $glace->description;
+        $pageTitle = $glace->getDescription();
         return $this->render('glaces/show', compact('glace', 'pageTitle'));
     }
     /** 
@@ -58,7 +58,7 @@ class Glace extends AbstractController
 
         if ($glace) {
             $edit = true;
-            $pageTitle = $glace->description;
+            $pageTitle = $glace->getDescription();
         }
 
         $description = null;
@@ -78,8 +78,14 @@ class Glace extends AbstractController
             return $this->redirect(["type" => "glace", "action" => "index"]);
         }
 
+
+
+
         if ($description && $image) {
-            $this->defaultModel->save($description, $image);
+            $glace = new \Models\Glace();
+            $glace->setDescription($description);
+            $glace->setImage($image);
+            $this->defaultModel->save($glace);
             return $this->redirect(["type" => "glace", "action" => "index"]);
         }
 

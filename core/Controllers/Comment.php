@@ -31,9 +31,14 @@ class Comment extends AbstractController
             return $this->redirect(["type" => "cocktail", "action" => "index", "info" => "noId"]);
         }
 
-        $this->defaultModel->save($author, $content, $id);
+        $comment = new \Models\Comment();
+        $comment->setAuthor($author);
+        $comment->setContent($content);
+        $comment->setCocktailId($id);
 
-        return $this->redirect(["type" => "cocktail", "action" => "show", "id" => $cocktail->id]);
+        $this->defaultModel->save($comment);
+
+        return $this->redirect(["type" => "cocktail", "action" => "show", "id" => $cocktail->getId()]);
     }
 
     public function delete(): Response
@@ -56,6 +61,6 @@ class Comment extends AbstractController
 
         $this->defaultModel->remove($id);
 
-        return $this->redirect(["type" => "cocktail", "action" => "show", "id" => $comment->cocktail_id]);
+        return $this->redirect(["type" => "cocktail", "action" => "show", "id" => $comment->getCocktailId()]);
     }
 }

@@ -6,6 +6,13 @@ abstract class AbstractModel
 {
     protected $pdo;
     protected string $tableName;
+    private $model;
+
+    public function getModel()
+    {
+        return $this->model;
+    }
+
 
     public function __construct()
     {
@@ -52,4 +59,34 @@ abstract class AbstractModel
             'id' => $id
         ]);
     }
+
+
+    // public function save($elements)
+    // {
+    //     $model = $this->getModel();
+    //     foreach ($elements as $element) {
+    //         $sql = $this->pdo->prepare("INSERT INTO {$this->tableName} ({$this->element}) VALUES ({$this->element})");
+    //         $sql->execute([
+    //             'option' => $this->element
+    //         ]);
+    //     }
+    // }
+
+
+
+    // /**
+    //  * ajoute un nouveau cocktail dans la bdd
+    //  * @param Cocktail $cocktail
+    //  * @return void
+    //  */
+    // public function save(Cocktail $cocktail)
+    // {
+    //     $sql = $this->pdo->prepare("INSERT INTO {$this->tableName} (name, image, ingredients) VALUES (:name, :image, :ingredients)");
+    //     $sql->execute([
+    //         'name' => $cocktail->name,
+    //         'image' => $cocktail->image,
+    //         'ingredients' => $cocktail->ingredients,
+    //     ]);
+    // }
+
 }

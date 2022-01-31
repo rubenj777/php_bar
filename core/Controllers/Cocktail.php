@@ -7,6 +7,7 @@ class Cocktail extends AbstractController
 
     protected $defaultModelName = \Models\Cocktail::class;
 
+
     /**
      * affiche l'accueil des cocktails
      */
@@ -44,9 +45,9 @@ class Cocktail extends AbstractController
         }
 
         $modelComment = new \Models\Comment();
-        $comments = $modelComment->findAllByCocktail($cocktail->id);
+        $comments = $modelComment->findAllByCocktail($cocktail->getId());
 
-        $pageTitle = $cocktail->name;
+        $pageTitle = $cocktail->getName();
         return $this->render('cocktails/show', compact('cocktail', 'comments', 'pageTitle'));
     }
 
@@ -67,7 +68,14 @@ class Cocktail extends AbstractController
         }
 
         if ($name && $image && $ingredients) {
-            $this->defaultModel->save($name, $image, $ingredients);
+
+            $cocktail = new \Models\Cocktail();
+            $cocktail->setName($name);
+            $cocktail->setImage($image);
+            $cocktail->setIngredients($ingredients);
+
+            $this->defaultModel->save($cocktail);
+
             return $this->redirect(['type' => 'cocktail', 'action' => 'index']);
         }
 

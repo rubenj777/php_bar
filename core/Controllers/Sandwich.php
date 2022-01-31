@@ -44,7 +44,7 @@ class Sandwich extends AbstractController
         }
 
 
-        $pageTitle = $sandwich->description;
+        $pageTitle = $sandwich->getDescription();
         return $this->render('sandwiches/show', compact('sandwich', 'pageTitle'));
     }
 
@@ -68,7 +68,7 @@ class Sandwich extends AbstractController
 
         if ($sandwich) {
             $edit = true;
-            $pageTitle = $sandwich->description;
+            $pageTitle = $sandwich->getDescription();
         }
 
         $description = null;
@@ -90,7 +90,12 @@ class Sandwich extends AbstractController
         }
 
         if ($description && $prix) {
-            $this->defaultModel->save($description, $prix);
+            $sandwich = new \Models\Sandwich();
+            $sandwich->setDescription($description);
+            $sandwich->setPrix($prix);
+
+
+            $this->defaultModel->save($sandwich);
             return $this->redirect(["type" => "sandwich", "action" => "index"]);
         }
 

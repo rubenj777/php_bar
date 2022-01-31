@@ -5,6 +5,48 @@ namespace Models;
 class Comment extends AbstractModel
 {
     protected string $tableName = "comments";
+    private int $id;
+    private string $author;
+    private string $content;
+    private int $cocktail_id;
+
+    // GETTERS
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    public function getCocktailId()
+    {
+        return $this->cocktail_id;
+    }
+
+    // SETTERS
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    }
+
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    public function setCocktailId($cocktail_id)
+    {
+        $this->cocktail_id = $cocktail_id;
+    }
+
 
     /**
      * trouver tous les commentaires d'un cocktail
@@ -23,17 +65,15 @@ class Comment extends AbstractModel
 
     /**
      * insert dans la bdd le nouveau commentaire
-     * @param string $author
-     * @param string $content
-     * @param integer $cocktail_id
+     * @param Comment $comment
      */
-    public function save(string $author, string $content, int $cocktail_id): void
+    public function save(Comment $comment): void
     {
         $sql = $this->pdo->prepare("INSERT INTO {$this->tableName} (author, content, cocktail_id) VALUES (:author, :content, :cocktail_id)");
         $sql->execute([
-            'author' => $author,
-            'content' => $content,
-            'cocktail_id' => $cocktail_id
+            'author' => $comment->author,
+            'content' => $comment->content,
+            'cocktail_id' => $comment->cocktail_id
         ]);
     }
 }

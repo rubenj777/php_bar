@@ -5,6 +5,47 @@ namespace Models;
 class Reaction extends AbstractModel
 {
     protected string $tableName = "reactions";
+    private int $id;
+    private string $author;
+    private string $content;
+    private int $info_id;
+
+    // GETTERS
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    public function getInfoId()
+    {
+        return $this->info_id;
+    }
+
+    // SETTERS
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    }
+
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    public function setInfoId($info_id)
+    {
+        $this->info_id = $info_id;
+    }
 
     /**
      * trouver tous les reactions d'une info
@@ -23,18 +64,16 @@ class Reaction extends AbstractModel
 
     /**
      * insert dans la bdd la nouvelle reaction
-     * @param string $author
-     * @param string $content
-     * @param integer $info_id
+     * @param Reaction $reaction
      */
-    public function save(string $author, string $content, int $info_id): void
+    public function save(Reaction $reaction): void
     {
 
         $sql = $this->pdo->prepare("INSERT INTO {$this->tableName} (author, content, info_id) VALUES (:author, :content, :info_id)");
         $sql->execute([
-            'author' => $author,
-            'content' => $content,
-            'info_id' => $info_id
+            'author' => $reaction->author,
+            'content' => $reaction->content,
+            'info_id' => $reaction->info_id
         ]);
     }
 }

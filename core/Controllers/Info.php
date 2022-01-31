@@ -44,9 +44,9 @@ class Info extends AbstractController
         }
 
         $modelReaction = new \Models\Reaction();
-        $reactions = $modelReaction->findAllByInfo($info->id);
+        $reactions = $modelReaction->findAllByInfo($info->getId());
 
-        $pageTitle = $info->description;
+        $pageTitle = $info->getDescription();
         return $this->render('infos/show', compact('info', 'reactions', 'pageTitle'));
     }
 
@@ -68,11 +68,10 @@ class Info extends AbstractController
 
         if ($info) {
             $edit = true;
-            $pageTitle = $info->description;
+            $pageTitle = $info->getDescription();
         }
 
         $description = null;
-
         if (!empty($_POST['description'])) {
             $description = htmlspecialchars($_POST['description']);
         }
@@ -83,12 +82,18 @@ class Info extends AbstractController
         }
 
         if ($description && $idToEdit) {
-            $this->defaultModel->update($description, $idToEdit);
+            $info = new \Models\Info();
+            $info->setDescription($description);
+
+            $this->defaultModel->update($info, $idToEdit);
             return $this->redirect(["type" => "info", "action" => "index"]);
         }
 
         if ($description) {
-            $this->defaultModel->save($description);
+            $info = new \Models\Info();
+            $info->setDescription($description);
+
+            $this->defaultModel->save($info);
             return $this->redirect(["type" => "info", "action" => "index"]);
         }
 

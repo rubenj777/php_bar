@@ -32,10 +32,14 @@ class Reaction extends AbstractController
             return $this->redirect(["type" => "info", "action" => "index", "info" => "noId"]);
         }
 
+        $reaction = new \Models\Reaction();
+        $reaction->setAuthor($author);
+        $reaction->setContent($content);
+        $reaction->setInfoId($id);
 
-        $this->defaultModel->save($author, $content, $info->id);
+        $this->defaultModel->save($reaction);
 
-        return $this->redirect(["type" => "info", "action" => "show", "id" => $info->id]);
+        return $this->redirect(["type" => "info", "action" => "show", "id" => $info->getId()]);
     }
 
     public function delete(): Response
@@ -58,6 +62,6 @@ class Reaction extends AbstractController
 
         $this->defaultModel->remove($id);
 
-        return $this->redirect(["type" => "info", "action" => "show", "id" => $reaction->info_id]);
+        return $this->redirect(["type" => "info", "action" => "show", "id" => $reaction->getInfoId()]);
     }
 }

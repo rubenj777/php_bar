@@ -5,17 +5,46 @@ namespace Models;
 class Sandwich extends AbstractModel
 {
     protected string $tableName = "sandwiches";
+    private int $id;
+    private string $description;
+    private int $prix;
+
+    //GETTERS
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    //SETTERS
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+    }
 
     /**
-     * @param string $description
-     * @param int $prix
+     * @param Sandwich $sandwich
      */
-    public function save(string $description, int $prix): void
+    public function save(Sandwich $sandwich): void
     {
         $sql = $this->pdo->prepare("INSERT INTO {$this->tableName} (description, prix) VALUES (:description, :prix)");
         $sql->execute([
-            'description' => $description,
-            'prix' => $prix,
+            'description' => $sandwich->description,
+            'prix' => $sandwich->prix,
         ]);
     }
 

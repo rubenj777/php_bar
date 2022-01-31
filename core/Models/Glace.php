@@ -5,19 +5,49 @@ namespace Models;
 class Glace extends AbstractModel
 {
     protected string $tableName = "glaces";
+    private int $id;
+    private string $description;
+    private string $image;
+
+    // GETTERS
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    // SETTERS
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
 
     /**
      * ajoute un nouveau cocktail dans la bdd
-     * @param string $description
-     * @param string $image
+     * @param Glace $glace
      * @return void
      */
-    public function save(string $description, string $image)
+    public function save(Glace $glace)
     {
         $sql = $this->pdo->prepare("INSERT INTO {$this->tableName} (description, image) VALUES (:description, :image)");
         $sql->execute([
-            'description' => $description,
-            'image' => $image,
+            'description' => $glace->description,
+            'image' => $glace->image,
         ]);
     }
 
